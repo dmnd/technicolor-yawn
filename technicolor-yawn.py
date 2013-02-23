@@ -8,7 +8,7 @@ colours = {
     'green': '0;32',        'bright green': '1;32',
     'yellow': '0;33',       'bright yellow': '1;33',
     'blue': '0;34',         'bright blue': '1;34',
-    'magenta': '0;35',       'bright magenta': '1;35',
+    'magenta': '0;35',      'bright magenta': '1;35',
     'cyan': '0;36',         'bright cyan': '1;36',
     'white': '0;37',        'bright white': '1;37',
 }
@@ -70,7 +70,7 @@ def format_line(parsed_line):
     return output
 
 
-def supress_message(message):
+def suppress_message(message):
     m = message[0]
     level = m.group('level')
     message = m.group('message')
@@ -82,12 +82,11 @@ def supress_message(message):
         level == "INFO" and filename == "render.py" and message.startswith('Dynamically loading'),
         level == "INFO" and filename == "render.py" and message.startswith("Compiled"),
     ]
-
     return any(blacklist)
 
 
 def output_log(message):
-    if supress_message(message):
+    if suppress_message(message):
         return
 
     sys.stdout.write(format_line(message[0]))
@@ -99,7 +98,7 @@ def read_stream(stream):
     nextline = re.match(pattern, stream.readline(), re.VERBOSE)
     assert nextline
 
-    while 1:
+    while True:
         lines = [nextline]
         while True:
             # start of a new log message - read until the end
