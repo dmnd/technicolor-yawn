@@ -2,23 +2,7 @@ import sys
 import re
 import io
 
-colours = {
-    'black': '0;30',        'bright black': '1;30',
-    'red': '0;31',          'bright red': '1;31',
-    'green': '0;32',        'bright green': '1;32',
-    'yellow': '0;33',       'bright yellow': '1;33',
-    'blue': '0;34',         'bright blue': '1;34',
-    'magenta': '0;35',      'bright magenta': '1;35',
-    'cyan': '0;36',         'bright cyan': '1;36',
-    'white': '0;37',        'bright white': '1;37',
-}
-
-
-def str_colour(s, colour=None):
-    if colour:
-        return '\033[%sm%s\033[0m' % (colours[colour], s)
-    else:
-        return s
+from termcolor import colored
 
 
 pattern = """
@@ -49,24 +33,24 @@ def format_line(parsed_line):
             'ERROR': 'red',
             'CRITICAL': 'magenta',
         },
-        'date': 'black',
-        'time': 'black',
-        'filename': 'black',
-        'line': 'black',
+        'date': 'grey',
+        'time': 'grey',
+        'filename': 'grey',
+        'line': 'grey',
         'message': 'white'
     }
 
-    default_colour = 'black'
+    default_colour = 'grey'
     i = 0
     for g in order:
         colour = groups[g]
         if isinstance(colour, dict):
             colour = colour[parsed_line.group(g)]
-        output += str_colour(parsed_line.string[i:parsed_line.start(g)], default_colour)
-        output += str_colour(parsed_line.group(g), colour or default_colour)
+        output += colored(parsed_line.string[i:parsed_line.start(g)], default_colour)
+        output += colored(parsed_line.group(g), colour or default_colour)
         i = parsed_line.end(g)
 
-    output += str_colour(parsed_line.string[i:], default_colour)
+    output += colored(parsed_line.string[i:], default_colour)
     return output
 
 
