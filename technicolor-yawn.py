@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import re
 import io
@@ -76,6 +78,7 @@ def output_log(message):
     sys.stdout.write(format_line(message[0]))
     for line in message[1:]:
         sys.stdout.write(line)
+    sys.stdout.flush()
 
 
 def read_stream(stream):

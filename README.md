@@ -9,7 +9,7 @@ Academy specific stuff.
 
 Usage:
 
-    dev_appserver.py --debug /path/to/your/app 2>&1 | python -u technicolor-yawn.py
+    dev_appserver.py --debug /path/to/your/app 2>&1 | technicolor-yawn.py
 
 Then your log will look something like this:
 
