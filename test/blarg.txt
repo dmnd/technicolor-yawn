@@ -1,0 +1,15 @@
+Warning: You are using a Python runtime (2.7) that is more recent than the production runtime environment (2.5). Your application may use features that are not available in the production environment and may not work correctly when deployed to production.
+DEBUG    2013-02-27 22:19:11,258 appengine_rpc.py:174] Server: appengine.google.com
+INFO     2013-02-27 22:19:11,261 appcfg.py:618] Checking for updates to the SDK.
+DEBUG    2013-02-27 22:19:11,262 appengine_rpc.py:392] Sending HTTPS request:
+POST /api/updatecheck?api_versions=%5B%271%27%5D&release=1.7.5&runtime=python&timestamp=1357690550 HTTPS/1.1
+Host: appengine.google.com
+X-appcfg-api-version: 1
+Content-type: application/octet-stream
+User-agent: appcfg_py/1.7.5 Darwin/11.4.2 Python/2.7.1.final.0
+
+
+INFO     2013-02-27 22:19:11,409 appcfg.py:636] The SDK is up to date.
+WARNING  2013-02-27 22:19:11,413 dev_appserver.py:3682] Could not initialize images API; you are likely missing the Python "PIL" module. ImportError: No module named _imaging
+INFO     2013-02-27 22:19:11,420 dev_appserver_multiprocess.py:656] Running application dev~khan-report on port 8081: http://0.0.0.0:8081
+INFO     2013-02-27 22:19:11,420 dev_appserver_multiprocess.py:658] Admin console is available at: http://0.0.0.0:8081/_ah/admin

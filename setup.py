@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='technicolor-yawn',
-    version='0.1.0',
+    version='0.1.1',
     author='Desmond Brand',
     author_email='dmnd@desmondbrand.com',
     scripts=['bin/technicolor-yawn'],

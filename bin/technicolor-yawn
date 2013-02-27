@@ -9,7 +9,7 @@ from termcolor import colored
 
 pattern = """
     ^
-    (?P<level>\w+)
+    (?P<level>(DEBUG|INFO|WARNING|ERROR|CRITICAL))
     \s+
     (?P<date>\d\d\d\d-\d\d-\d\d)
     \s+
@@ -82,13 +82,19 @@ def output_log(message):
 
 
 def read_stream(stream):
-    nextline = re.match(pattern, stream.readline(), re.VERBOSE)
-    assert nextline
+    # until we hit the start of a message, just output everything
+    while True:
+        line = stream.readline()
+        nextline = re.match(pattern, line, re.VERBOSE)
+        if nextline:
+            break
+        sys.stdout.write(line)
 
+    # now we are at the start of a message, so read the whole thing (it could
+    # have multiple line) then output it
     while True:
         lines = [nextline]
         while True:
-            # start of a new log message - read until the end
             line = stream.readline()
             m = re.match(pattern, line, re.VERBOSE)
             lines.append(m or line)
