@@ -105,12 +105,16 @@ def read_stream(stream):
 
 
 def main():
-    if len(sys.argv) == 1:
-        read_stream(sys.stdin)
-    else:
-        filename = sys.argv[1]
-        with io.open(filename) as s:
-            read_stream(s)
+    try:
+        if len(sys.argv) == 1:
+            read_stream(sys.stdin)
+        else:
+            filename = sys.argv[1]
+            with io.open(filename) as s:
+                read_stream(s)
+    except KeyboardInterrupt:
+        # Ignore KeyboardInterrupt, since this is how we stop GAE
+        return
 
 
 if __name__ == '__main__':
