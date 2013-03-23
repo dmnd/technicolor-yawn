@@ -1,0 +1,25 @@
+INFO     2013-03-05 00:30:57,964 dev_appserver.py:3056] "GET /gae_bingo/api/v1/experiments/summary?canonical_name=welcome+email+delay+days+Dec+17&archives=0 HTTP/1.0" 200 -
+INFO     2013-03-05 00:30:58,109 dev_appserver.py:3056] "GET /gae_bingo/api/v1/experiments/conversions?experiment_name=welcome+email+delay+days+Dec+17+(email_open_binary)&archives=0 HTTP/1.0" 200 -
+INFO     2013-03-05 00:31:10,733 dev_appserver.py:3056] "GET /_ah/remote_api?rtok=925403444699 HTTP/1.1" 200 -
+INFO     2013-03-05 00:32:51,149 mail_stub.py:138] MailService.Send
+  From: b@b.com
+  To: a@a.com
+  Subject: hi
+DEBUG    2013-03-05 00:27:22,314 event_log.py:127] KALOG;pageload;bingo.param:load_homepage_count;id.bingo:_gae_bingo_random%3A5k8PtGqCymlJ84va-sJX9Az3WNZ5ISBiYk-eszdt;
+INFO     2013-03-05 00:27:22,345 dev_appserver.py:3056] "GET / HTTP/1.0" 200 -
+INFO     2013-03-05 00:27:29,235 dev_appserver.py:3056] "GET /api/v1/topicversion/1/topicpreviews?casing=camel&v=nocachebust&lang=en HTTP/1.0" 200 -
+INFO     2013-03-05 00:27:29,510 dev_appserver.py:3056] "GET /api/v1/autocompleteindex?v=1&lang=en HTTP/1.0" 200 -
+INFO     2013-03-05 00:27:30,514 dev_appserver.py:3056] "GET /api/v1/stories?samples=6&lang=en&_=1362443248583 HTTP/1.0" 200 -
+INFO     2013-03-05 00:29:23,036 cache.py:163] Set BingoCache in instance cache and memcache
+DEBUG    2013-03-05 00:29:23,813 event_log.py:127] KALOG;pageload;id.bingo:_gae_bingo_random%3A5k8PtGqCymlJ84va-sJX9Az3WNZ5ISBiYk-eszdt;
+INFO     2013-03-05 00:29:23,848 dev_appserver.py:3056] "GET /signup HTTP/1.0" 200 -
+INFO     2013-03-05 00:29:27,923 dev_appserver.py:3056] "GET /api/v1/autocompleteindex?v=1&lang=en HTTP/1.0" 200 -
+INFO     2013-03-05 00:29:37,125 dev_appserver.py:3056] "GET /_ah/login?continue=http%3A//dev.khanacademy.org/postlogin%3Ftype%3Dgoogle%26completesignup%3D0 HTTP/1.0" 200 -
+INFO     2013-03-05 00:29:49,615 dev_appserver.py:3056] "GET /_ah/login?email=test1%40example.com&action=Login&continue=http%3A%2F%2Fdev.khanacademy.org%2Fpostlogin%3Ftype%3Dgoogle%26completesignup%3D0 HTTP/1.0" 302 -
+INFO     2013-03-05 00:29:49,952 cache.py:163] Set BingoCache in instance cache and memcache
+DEBUG    2013-03-05 00:29:50,382 event_log.py:127] KALOG;pageload;bingo.param:email_subscription_binary;bingo.param:email_subscription_count;bingo.param:registration_binary;bingo.param:login_binary;bingo.param:login_count;id.bingo:_gae_bingo_random%3A5k8PtGqCymlJ84va-sJX9Az3WNZ5ISBiYk-eszdt;
+INFO     2013-03-05 00:29:50,443 dev_appserver.py:3056] "GET /postlogin?type=google&completesignup=0 HTTP/1.0" 302 -
+INFO     2013-03-05 00:29:50,479 deferred.py:291] X-Appengine-Taskretrycount:0, X-Appengine-Tasketa:1362443389.74, X-Appengine-Queuename:coach-request-processing-queue, X-Appengine-Taskname:task1, X-Appengine-Taskexecutioncount:0, X-Appengine-Current-Namespace:
+INFO     2013-03-05 00:29:50,606 dev_appserver.py:3056] "POST /_ah/queue/deferred HTTP/1.0" 200 -
+INFO     2013-03-05 00:29:52,400 cache.py:163] Set BingoCache in instance cache and memcache
+DEBUG    2013-03-05 00:29:53,287 event_log.py:127] KALOG;pageload;bingo.param:load_homepage_count;id.bingo:_gae_bingo_random%3A5k8PtGqCymlJ84va-sJX9Az3WNZ5ISBiYk-eszdt;

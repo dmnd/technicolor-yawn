@@ -3,6 +3,7 @@
 import sys
 import re
 import io
+import urllib
 
 from termcolor import colored
 
@@ -26,7 +27,7 @@ pattern = """
 
 def format_line(parsed_line):
     output = ""
-    order = ['level', 'date', 'time', 'filename', 'line', 'message']
+    order = ['level', 'date', 'time', 'filename', 'line']
     groups = {
         'level': {
             'DEBUG': 'blue',
@@ -39,19 +40,51 @@ def format_line(parsed_line):
         'time': 'grey',
         'filename': 'grey',
         'line': 'grey',
-        'message': 'white'
     }
 
     default_colour = 'grey'
     i = 0
     for g in order:
+        # use the default colour to get to the start of this section
+        output += colored(
+            parsed_line.string[i:parsed_line.start(g)], default_colour)
+
+        # now use the defined colour to print this part
         colour = groups[g]
         if isinstance(colour, dict):
             colour = colour[parsed_line.group(g)]
-        output += colored(parsed_line.string[i:parsed_line.start(g)], default_colour)
+
         output += colored(parsed_line.group(g), colour or default_colour)
         i = parsed_line.end(g)
 
+    # use the default colour to get to the start of this section
+    output += colored(
+        parsed_line.string[i:parsed_line.start('message')], default_colour)
+
+    # now add the message part
+    message = parsed_line.group('message')
+    if message.startswith("MailService.Send"):
+        colour = 'red'
+        bg = 'on_white'
+        output += colored(message, 'red', 'on_white')
+    # make /api request different - maybe invert this to making non api reqs stand out
+    elif message.startswith('"GET /api/'):
+        output += colored(message, 'grey')
+    elif message.startswith("KALOG"):
+        # improve readability of these guys
+        parts = message.split(";")
+        for part in parts:
+            kv = part.split(":")
+            if len(kv) == 2:
+                k, v = kv
+                v = urllib.unquote(v)
+                output += "\n%s: %s" % (colored(k, 'blue'),
+                                        colored(v, 'white'))
+    else:
+        output += colored(message, 'white')
+    i = parsed_line.end('message')
+
+    # use the default for the rest
     output += colored(parsed_line.string[i:], default_colour)
     return output
 
@@ -67,6 +100,8 @@ def suppress_message(message):
         level == "INFO" and message.startswith('Saved; key: __appstats__'),
         level == "INFO" and filename == "render.py" and message.startswith('Dynamically loading'),
         level == "INFO" and filename == "render.py" and message.startswith("Compiled"),
+        level == "INFO" and message.startswith('"GET /userprogresscss'),
+        level == "INFO" and message.startswith('"GET /api/v1/autocompleteindex'),
     ]
     return any(blacklist)
 
