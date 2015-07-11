@@ -2,7 +2,6 @@
 
 import sys
 import re
-import io
 
 from termcolor import colored
 
@@ -81,37 +80,35 @@ def output_log(message):
     sys.stdout.flush()
 
 
-def read_stream(stream):
-    # until we hit the start of a message, just output everything
-    while True:
-        line = stream.readline()
-        nextline = re.match(pattern, line, re.VERBOSE)
-        if nextline:
-            break
-        sys.stdout.write(line)
-
-    # now we are at the start of a message, so read the whole thing (it could
-    # have multiple line) then output it
-    while True:
-        lines = [nextline]
-        while True:
-            line = stream.readline()
-            m = re.match(pattern, line, re.VERBOSE)
-            lines.append(m or line)
-            if m:
-                break
-        nextline = lines.pop()
-        output_log(lines)
+def read_file(fileobj):
+    # Once we recognize the start of a structured message, we make the
+    # big assumption that the message might be multi-line and consists
+    # of everything up until the start of another message. The first
+    # item of message_buffer is a match object and the rest are strings.
+    message_buffer = []
+    for line in fileobj:
+        message_start_match = re.match(pattern, line, re.VERBOSE)
+        if message_start_match:
+            if message_buffer:
+                output_log(message_buffer)
+            message_buffer = [message_start_match]
+        elif message_buffer:
+            message_buffer.append(line)
+        else:
+            # No structured message yet, so just pass it through.
+            sys.stdout.write(line)
+    if message_buffer:
+        output_log(message_buffer)
 
 
 def main():
     try:
         if len(sys.argv) == 1:
-            read_stream(sys.stdin)
+            read_file(sys.stdin)
         else:
             filename = sys.argv[1]
-            with io.open(filename) as s:
-                read_stream(s)
+            with open(filename, "r") as f:
+                read_file(f)
     except KeyboardInterrupt:
         # Ignore KeyboardInterrupt, since this is how we stop GAE
         return
