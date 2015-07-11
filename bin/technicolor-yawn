@@ -86,19 +86,24 @@ def read_file(fileobj):
     # of everything up until the start of another message. The first
     # item of message_buffer is a match object and the rest are strings.
     message_buffer = []
-    for line in fileobj:
-        message_start_match = re.match(pattern, line, re.VERBOSE)
-        if message_start_match:
-            if message_buffer:
-                output_log(message_buffer)
-            message_buffer = [message_start_match]
-        elif message_buffer:
-            message_buffer.append(line)
-        else:
-            # No structured message yet, so just pass it through.
-            sys.stdout.write(line)
-    if message_buffer:
-        output_log(message_buffer)
+    try:
+        while True:
+            line = fileobj.readline()
+            if not line:  # got EOF, so exit
+                break
+            message_start_match = re.match(pattern, line, re.VERBOSE)
+            if message_start_match:
+                if message_buffer:
+                    output_log(message_buffer)
+                message_buffer = [message_start_match]
+            elif message_buffer:
+                message_buffer.append(line)
+            else:
+                # No structured message yet, so just pass it through.
+                sys.stdout.write(line)
+    finally:
+        if message_buffer:
+            output_log(message_buffer)
 
 
 def main():
